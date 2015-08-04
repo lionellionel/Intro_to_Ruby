@@ -2,7 +2,7 @@
 #  performs computation on two integers
 
 def get_num
-  puts "Enter a number: "
+  puts "Enter an integer: "
   num = gets.chomp
   until num =~ /^\d+$/
     puts "Nope.  Please enter a valid integer"
@@ -33,16 +33,13 @@ loop do
     next
   end
 
-  answer = case operand
-    when 1
-      num1.to_i + num2.to_i
-    when 2
-      num1.to_i - num2.to_i
-    when 3
-      num1.to_i * num2.to_i
-    when 4
-      num1.to_f / num2.to_f
-  end
+  answer =
+    case operand
+    when 1 then num1.to_i + num2.to_i
+    when 2 then num1.to_i - num2.to_i
+    when 3 then num1.to_i * num2.to_i
+    when 4 then num1.to_f / num2.to_f
+    end
 
   puts "The answer is: #{answer}\n\n"
   puts "Want another?"
