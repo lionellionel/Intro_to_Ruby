@@ -25,6 +25,9 @@
 # else catseye
 
 grid = Array.new(9)
+# a nil value in grid represents an open space
+# a 1 value represents a pip for the user (X)
+# a 0 value represents a pip for the computer (O)
 
 # slice is a list of sets of grid coordinates
 #  that represent a "slice" i.e. line through the grid
@@ -35,16 +38,17 @@ slices = [
   ]
 
 def print_grid(grid)
-  #for display map grid to pip character 
-  grid_display = grid.map do |pip|
-    if pip == 1
-      "X"
-    elsif pip == 0
-      "O"
-    else
-      " "
+  # map grid to pip character for display purposes
+  grid_display = 
+    grid.map do |pip|
+      if pip == 1
+        "X"
+      elsif pip == 0
+        "O"
+      else
+        " "
+      end
     end
-  end
 
   puts "     |     |     "
   puts "  #{grid_display[0]}  |  #{grid_display[1]}  |  #{grid_display[2]}  "
@@ -74,7 +78,7 @@ def update_grid(grid,coordinate,player)
   grid[coordinate] = player
 end
 
-# return a new tic-tac-toe grid 
+# return a new tic-tac-toe grid
 def simulate_grid(grid,coordinate,player)
   new_grid = grid.clone
   new_grid[coordinate] = player
@@ -84,10 +88,10 @@ end
 def find_winner(grid,slices)
   slices.each do |slice| 
     #if grid has empty space, it can't be a winner
-    #   ugh fix this!  next if grid[slice.include?(nil)
-    #next if grid[slice.include?(nil)
+    next if [grid[slice[0]],grid[slice[1]],grid[slice[2]]].include?(nil)
+    # if all equal, return winner
     if (grid[slice[0]] == grid[slice[1]]) && (grid[slice[1]] == grid[slice[2]] )
-      return grid[slice[0]] unless grid[slice[0]].nil?
+      return grid[slice[0]]
     end
   end
   nil
@@ -95,68 +99,55 @@ end
 
 def computer_pick(grid,slices)
   open_spaces = grid.each_index.select{|x| grid[x].nil?}
+
+  # look for winners
   open_spaces.each do |x|
-    if find_winner(simulate_grid(grid,x,1),slices)
-      puts "found #{x}"
-      return x
-    end
     if find_winner(simulate_grid(grid,x,0),slices)
-      puts "found #{x}"
+      puts "found #{x} for 0"
       return x
     end
   end
+
+  # look for blocks
+  open_spaces.each do |x|
+    if find_winner(simulate_grid(grid,x,1),slices)
+      puts "found #{x} for 1"
+      return x
+    end
+  end
+
+  # else pick from this order: center, corners, edges
+  # Note: not a perfect algorithm - computer can be beat!
   [4,0,2,6,8,1,3,5,7].each do |x|
     return x if open_spaces.include?(x)
   end
-  puts "not here"
+  puts "shouldn't get here"
   nil
-
 
 end
 
 
-#print_grid(grid)
-#grid[3]=1
-#grid[4]=0
+# MAIN
 print_grid(grid)
+
 until find_winner(grid,slices) || !grid.include?(nil) do
   user_choice = get_user_choice(grid)
-  puts "user chose #{user_choice}"
-  sample = simulate_grid(grid,user_choice,1)
-  print_grid(sample)
-  puts "that was the sample"
 
   update_grid(grid,user_choice,1)
   print_grid(grid)
-  puts "winner?: #{find_winner(grid,slices)}"
   break if find_winner(grid,slices) || !grid.include?(nil)
 
-puts "pick"
-  puts computer_pick(grid,slices)
-
   puts "Computer goes:"
-  #update_grid(grid,grid.each_index.select{|x| grid[x].nil?}.sample,0)
   update_grid(grid,computer_pick(grid,slices),0)
   print_grid(grid)
-  puts "winner?: #{find_winner(grid,slices)}"
 
 end
-puts find_winner(grid,slices)
-#print_grid(grid)
-#user_choice = get_user_choice(grid)
-#puts user_choice
-#update_grid(grid,user_choice,1)
-#puts find_winner(grid,slices)
-#print_grid(grid)
-#update_grid(grid,grid.each_index.select{|x| grid[x].nil?}.sample,0)
-#puts find_winner(grid,slices)
-#print_grid(grid)
-#user_choice = get_user_choice(grid)
-#puts user_choice
-#update_grid(grid,user_choice,1)
-#puts find_winner(grid,slices)
-#print_grid(grid)
-#update_grid(grid,grid.each_index.select{|x| grid[x].nil?}.sample,0)
-#puts find_winner(grid,slices)
-#print_grid(grid)
-#
+
+case find_winner(grid,slices)
+  when 1
+    puts "Hey you won!"
+  when 0
+    puts "You've been beat!"
+  else
+    puts "Looks like a cats-eye"
+end
