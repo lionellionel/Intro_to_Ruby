@@ -7,7 +7,7 @@ grid = Array.new(9)
 
 # a slice is a set of grid coordinates that
 # represents a line going through 3 squares in the grid
-slices = [
+SLICES = [
   [0,1,2],[3,4,5],[6,7,8],
   [0,3,6],[1,4,7],[2,5,8],
   [0,4,8],[2,4,6]
@@ -26,6 +26,7 @@ def print_grid(grid)
       end
     end
 
+  system 'clear'
   puts "     |     |     "
   puts "  #{grid_display[0]}  |  #{grid_display[1]}  |  #{grid_display[2]}  "
   puts "     |     |     "
@@ -50,19 +51,19 @@ def get_user_choice(grid)
 end
 
 # Update tic-tac-toe grid (destructive method)
-def update_grid(grid,coordinate,player)
+def update_grid(grid, coordinate, player)
   grid[coordinate] = player
 end
 
 # return a new tic-tac-toe grid
-def simulate_grid(grid,coordinate,player)
+def simulate_grid(grid, coordinate, player)
   new_grid = grid.clone
   new_grid[coordinate] = player
   new_grid
 end
 
-def find_winner(grid,slices)
-  slices.each do |slice| 
+def find_winner(grid)
+  SLICES.each do |slice| 
     pips_in_slice = slice.map{|coordinate| grid[coordinate]}
     #if slice has empty space, it can't be a winner
     next if pips_in_slice.include?(nil)
@@ -72,19 +73,19 @@ def find_winner(grid,slices)
   nil
 end
 
-def computer_pick(grid,slices)
+def computer_pick(grid)
   open_spaces = grid.each_index.select{|coordinate| grid[coordinate].nil?}
 
   # look for winners
   open_spaces.each do |coordinate|
-    if find_winner(simulate_grid(grid,coordinate,0),slices)
+    if find_winner(simulate_grid(grid, coordinate, 0))
       return coordinate 
     end
   end
 
   # look for blocks
   open_spaces.each do |coordinate|
-    if find_winner(simulate_grid(grid,coordinate,1),slices)
+    if find_winner(simulate_grid(grid, coordinate, 1))
       return coordinate
     end
   end
@@ -102,20 +103,20 @@ end
 # MAIN
 print_grid(grid)
 
-until find_winner(grid,slices) || !grid.include?(nil) do
+until find_winner(grid) || !grid.include?(nil) do
   user_choice = get_user_choice(grid)
 
   update_grid(grid,user_choice,1)
   print_grid(grid)
-  break if find_winner(grid,slices) || !grid.include?(nil)
+  break if find_winner(grid) || !grid.include?(nil)
 
   puts "Computer goes:"
-  update_grid(grid,computer_pick(grid,slices),0)
+  update_grid(grid, computer_pick(grid), 0)
   print_grid(grid)
 
 end
 
-case find_winner(grid,slices)
+case find_winner(grid)
 when 1
   puts "Hey you won!"
 when 0
