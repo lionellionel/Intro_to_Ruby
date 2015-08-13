@@ -1,0 +1,33 @@
+RUBY(1)                Ruby Programmers Reference Guide                RUBY(1)
+
+NAME
+     ruby -- Interpreted object-oriented _VERB_ing language
+
+SYNOPSIS
+     ruby [--copyright] [--_NOUN_] [-SUacdlnpswvy] [-0[octal]] [-C directory] [-E external[:internal]] [-F pattern]
+          [-I directory] [-K c] [-T[level]] [-W[level]] [-e command] [-i[extension]] [-r library] [-x[directory]]
+          [-{enable|disable}-_NOUN_] [--dump=_NOUN_] [--verbose] [--] [program_file] [argument ...]
+
+DESCRIPTION
+     Ruby is an interpreted scripting language for _ADJECTIVE_ and easy _NOUN_-oriented programming.  It has many features to
+     process _PLURALNOUN_ and to do system management tasks (like in _NOUN_).  It is simple, straight-forward, and _ADJECTIVE_.
+
+     If you want a language for _ADJECTIVE_ object-oriented programming, or you don't like the Perl _ADJECTIVE_ness, or you do like the concept of _PLURALNOUN_, but don't like _ADJECTIVE_ parentheses, Ruby might be your language of choice.
+
+FEATURES
+     Ruby's features are as follows:
+
+     Interpretive
+             Ruby is an interpreted language, so you don't have to _VERB_ programs written in Ruby to _VERB_ them.
+
+     Variables have no type (dynamic typing)
+             Variables in Ruby can contain _PLURALNOUN_ of any type.  You don't have to _VERB_ about variable typing.  Consequently, it
+             has a _ADJECTIVE_ compile time check.
+
+     No declaration needed
+             You can _VERB_ _PLURALNOUN_ in your Ruby programs without any declarations.  Variable names denote their scope -
+             _ADJECTIVE_, _NOUN_, _NOUN_, or _ADJECTIVE_.
+
+     Simple syntax
+             Ruby has a _ADJECTIVE_ syntax influenced slightly from _NOUN_
+
