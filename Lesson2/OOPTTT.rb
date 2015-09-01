@@ -23,7 +23,7 @@ class Grid
 
 	def suggest(position)
 		opponents_position = position == 0 ? 1 : 0
-		# look for wins for self, then blocks on opponent 
+		# look for wins for player, then blocks on opponent 
 		[ position, opponents_position ].each do |win_or_block|
 		 	open_spaces.each do |coordinate|
 		 		# Marshal dump/load seems the easiest way to do a 
@@ -49,7 +49,7 @@ class Grid
 	def show
 	  # map grid to pip character for display purposes
 	  grid_display = 
-	    self.coordinates.map do |pip|
+	    coordinates.map do |pip|
 	      if pip == 1
 	        "X"
 	      elsif pip == 0
@@ -108,7 +108,7 @@ class Player
 
 	def go(grid)
 		if @is_human
-			puts "#{self.name}, it's your turn"
+			puts "#{name}, it's your turn"
 			puts 'Enter coordinate 1-9'
   		choice = gets.chomp.to_i - 1
   		until grid.open_spaces.include?(choice)

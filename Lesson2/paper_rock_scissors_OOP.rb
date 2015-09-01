@@ -32,17 +32,15 @@ class Game
   end
 
   def show_winner
-    return "none" unless self.user.hand && self.computer.hand
-  
-    if self.user.hand == self.computer.hand
-      puts "You both chose #{CHOICES[self.user.hand]}\nIt's a tie!"
-    elsif (self.user.hand == 'r' && self.computer.hand == 's') ||
-          (self.user.hand == 'p' && self.computer.hand == 'r') ||
-          (self.user.hand == 's' && self.computer.hand == 'p')
-      describe_victory(self.user.hand)
+    if user.hand == computer.hand
+      puts "You both chose #{CHOICES[user.hand]}\nIt's a tie!"
+    elsif (user.hand == 'r' && computer.hand == 's') ||
+          (user.hand == 'p' && computer.hand == 'r') ||
+          (user.hand == 's' && computer.hand == 'p')
+      describe_victory(user.hand)
       puts "User won!"
     else
-      describe_victory(self.computer.hand)
+      describe_victory(computer.hand)
       puts "Computer Won"
     end
   end
